@@ -47,7 +47,7 @@ To run the CV Mobile Application locally on your development environment, follow
 3. This project assumes that you are familiar with Jetpack Compose and Kotlin
 
 ## App Demo on Appetize.io
-[App Demo]: https://appetize.io/app/vk4yzm2rarqpu6ujrh7al73ot4?device=pixel4&osVersion=11.0&scale=75
+https://appetize.io/app/vk4yzm2rarqpu6ujrh7al73ot4?device=pixel4&osVersion=11.0&scale=75
 
 ## Feedback and Contributions
 If you encounter any issues, have feedback, or would like to contribute to this project, please feel free to create an issue or submit a pull request.
