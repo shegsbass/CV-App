@@ -1,11 +1,19 @@
 package com.shegs.cvapp.ui.screens
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +25,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +41,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -42,36 +58,86 @@ import androidx.navigation.NavController
 import com.shegs.cvapp.R
 import com.shegs.cvapp.viewmodel.CvViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CvScreen(navController: NavController, cvViewModel: CvViewModel) {
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-    ) {
-        item {
-            NameSection(cvViewModel)
-        }
-        item {
-            BioSection(cvViewModel)
-        }
-        item {
-            HandleSection(cvViewModel)
-        }
-        item {
-            EditButton(navController)
-        }
-    }
+    var title by remember { mutableStateOf("CV APP") }
+
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
+    // Create a scaffold with a top app bar
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(
+                    text = title,
+                    maxLines = 1,
+                    fontSize = 24.sp,
+                    letterSpacing = 0.sp,
+                    fontFamily = FontFamily(Font(R.font.raleway_black)),
+                    overflow = TextOverflow.Ellipsis
+                ) },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.secondaryContainer
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                scrollBehavior = scrollBehavior
+            )
+        },
+        content = {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues = PaddingValues(top = 45.dp, bottom = 24.dp,))
+            ) {
+                item {
+                    NameSection(cvViewModel)
+                }
+                item {
+                    BioSection(cvViewModel)
+                }
+                item {
+                    HandleSection(cvViewModel)
+                }
+                item {
+                    EditButton(navController)
+                }
+            }
+        })
 }
 
 @Composable
 fun NameSection(cvViewModel: CvViewModel) {
+
+    val bounceAnimation = rememberInfiniteTransition()
+    val translateY by bounceAnimation.animateFloat(
+        initialValue = -16f,
+        targetValue = 16f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 500, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = "Animation"
+    )
+
+    val scaleAnimation = rememberInfiniteTransition()
+    val scale by scaleAnimation.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(400.dp)
-            .background(Color.Black, RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colorScheme.onPrimaryContainer, RoundedCornerShape(bottomEnd = 100.dp))
             .padding(12.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -92,10 +158,12 @@ fun NameSection(cvViewModel: CvViewModel) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.circle),
-                    contentDescription = "Avatar",
-                    tint = Color.White.copy(alpha = 0.9f),
+                    contentDescription = "Circle",
+                    tint = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f),
                     modifier = Modifier
                         .size(170.dp)
+                        .scale(scale)
+
                 )
                 Image(
                     painter = painterResource(
@@ -104,6 +172,9 @@ fun NameSection(cvViewModel: CvViewModel) {
                     contentDescription = "Avatar",
                     modifier = Modifier
                         .size(170.dp)
+                        .graphicsLayer {
+                            translationY = translateY // Apply translationY to the icon
+                        }
                 )
             }
 
@@ -118,7 +189,7 @@ fun NameSection(cvViewModel: CvViewModel) {
                 ) {
                     Text(
                         text = "I'am,",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.secondaryContainer,
                         fontSize = 32.sp,
                         letterSpacing = 0.sp,
                         textAlign = TextAlign.Left,
@@ -127,8 +198,10 @@ fun NameSection(cvViewModel: CvViewModel) {
                     )
                     Text(
                         text = cvViewModel.firstName,
-                        color = Color.White,
-                        fontSize = 32.sp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 36.sp,
                         letterSpacing = 0.sp,
                         textAlign = TextAlign.Left,
                         fontFamily = FontFamily(Font(R.font.raleway_bold)),
@@ -136,8 +209,10 @@ fun NameSection(cvViewModel: CvViewModel) {
                     )
                     Text(
                         text = cvViewModel.lastName,
-                        color = Color.White,
-                        fontSize = 32.sp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 36.sp,
                         letterSpacing = 0.sp,
                         textAlign = TextAlign.Left,
                         fontFamily = FontFamily(Font(R.font.raleway_bold)),
@@ -154,10 +229,11 @@ fun NameSection(cvViewModel: CvViewModel) {
 fun BioSection(cvViewModel: CvViewModel) {
     Column(
         modifier = Modifier
-            .padding(top = 24.dp)
+            .padding(top = 24.dp, start = 24.dp, end = 24.dp)
     ) {
         Text(
             text = "About Me",
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 32.sp,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Left,
@@ -180,7 +256,7 @@ fun BioSection(cvViewModel: CvViewModel) {
                 append(textToShow)
                 if (cvViewModel.bio.length > maxLines * 25) {
                     // Add a "Read more" link at the end
-                    withStyle(style = SpanStyle(textDecoration = TextDecoration.None, color = Color.Magenta)) {
+                    withStyle(style = SpanStyle(textDecoration = TextDecoration.None, color = MaterialTheme.colorScheme.primaryContainer)) {
                         append("... Read more")
                     }
                 }
@@ -190,11 +266,12 @@ fun BioSection(cvViewModel: CvViewModel) {
         Text(
             text = text,
             fontSize = 16.sp,
+            color = MaterialTheme.colorScheme.onSurface,
             maxLines = if (expanded) Int.MAX_VALUE else maxLines,
             letterSpacing = 0.sp,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Left,
-            fontFamily = FontFamily(Font(R.font.raleway_regular)),
+            fontFamily = FontFamily(Font(R.font.raleway_medium)),
             modifier = Modifier.clickable { expanded = !expanded }
         )
     }
@@ -204,7 +281,7 @@ fun BioSection(cvViewModel: CvViewModel) {
 fun HandleSection(cvViewModel: CvViewModel) {
     Row(
         modifier = Modifier
-            .padding(top = 24.dp)
+            .padding(top = 24.dp, start = 24.dp, end = 24.dp)
     ) {
         Row(
             modifier = Modifier,
@@ -259,10 +336,12 @@ fun EditButton(navController: NavController) {
             navController.navigate("editCvScreen")
         },
         shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer),
         modifier = Modifier
             .width(150.dp)
             .height(100.dp)
-            .padding(top = 32.dp, bottom = 24.dp)
+            .padding(top = 32.dp, bottom = 24.dp, start = 24.dp, end = 24.dp),
+        elevation = ButtonDefaults.buttonElevation(20.dp)
     ) {
         Text("Edit CV")
     }
