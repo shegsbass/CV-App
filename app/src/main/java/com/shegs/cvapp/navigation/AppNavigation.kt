@@ -12,9 +12,9 @@ import com.shegs.cvapp.viewmodel.CvViewModel
 @Composable
 fun AppNavigation() {
 
-    val cvViewModel = viewModel<CvViewModel>()
-
     val navController = rememberNavController()
+
+    val cvViewModel = viewModel<CvViewModel>()
     
     NavHost(navController = navController, startDestination = "CvScreen"){
         composable("CvScreen"){ CvScreen(navController, cvViewModel)}

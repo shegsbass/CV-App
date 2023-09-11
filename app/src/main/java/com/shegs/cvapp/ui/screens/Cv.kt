@@ -229,7 +229,7 @@ fun NameSection(cvViewModel: CvViewModel) {
 fun BioSection(cvViewModel: CvViewModel) {
     Column(
         modifier = Modifier
-            .padding(top = 24.dp, start = 24.dp, end = 24.dp)
+            .padding(top = 32.dp, start = 24.dp, end = 24.dp)
     ) {
         Text(
             text = "About Me",

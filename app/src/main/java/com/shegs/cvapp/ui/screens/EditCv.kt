@@ -60,6 +60,12 @@ fun EditCvScreen(navController: NavController, cvViewModel: CvViewModel) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
+    var editedFirstName by remember { mutableStateOf(cvViewModel.firstName) }
+    var editedLastName by remember { mutableStateOf(cvViewModel.lastName) }
+    var editedSlackUsername by remember { mutableStateOf(cvViewModel.slackUsername) }
+    var editedGitHubHandle by remember { mutableStateOf(cvViewModel.githubHandle) }
+    var editedBio by remember { mutableStateOf(cvViewModel.bio) }
+
     // Create a scaffold with a top app bar
     Scaffold(
         topBar = {
@@ -130,11 +136,322 @@ fun EditCvScreen(navController: NavController, cvViewModel: CvViewModel) {
                 }
 
                 item {
-                    TextEditSection(cvViewModel)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 40.dp)
+                    ) {
+
+                        val bioMaxLength = 600
+                        val bioMinLength = 15
+                        val maxLength = 20
+                        val minLength = 3
+
+
+                        Text(
+                            text = "First Name",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 4.dp),
+                            textAlign = TextAlign.Start,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                            fontSize = 12.sp
+                        )
+
+                        TextField(
+                            value = editedFirstName,
+                            onValueChange = { editedFirstName = it },
+                            placeholder = {
+                                Text(
+                                    text = "Enter First Name",
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    fontFamily = FontFamily(Font(R.font.raleway_light)),
+                                    fontWeight = FontWeight(300),
+                                    fontSize = 12.sp
+                                )
+                            },
+                            shape = RoundedCornerShape(12.dp),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                cursorColor = MaterialTheme.colorScheme.tertiary,
+                                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = { editedFirstName = "" }) {
+                                    if (editedFirstName.length in minLength..maxLength) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Check,
+                                            tint = Color(0xFF006400),
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Clear,
+                                            tint = Color.Red,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                        )
+
+
+
+                        Text(
+                            text = "Last Name",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 4.dp, top = 12.dp),
+                            textAlign = TextAlign.Start,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                            fontSize = 12.sp
+                        )
+
+                        TextField(
+                            value = editedLastName,
+                            onValueChange = { editedLastName = it },
+                            placeholder = {
+                                Text(
+                                    text = "Enter Last Name",
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    fontFamily = FontFamily(Font(R.font.raleway_light)),
+                                    fontWeight = FontWeight(300),
+                                    fontSize = 12.sp
+                                )
+                            },
+                            shape = RoundedCornerShape(12.dp),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                cursorColor = MaterialTheme.colorScheme.tertiary,
+                                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = { editedLastName = "" }) {
+                                    if (editedLastName.length in minLength..maxLength) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Check,
+                                            tint = Color(0xFF006400),
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Clear,
+                                            tint = Color.Red,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                        )
+
+
+                        Text(
+                            text = "Github Handle",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 4.dp, top = 12.dp),
+                            textAlign = TextAlign.Start,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                            fontSize = 12.sp
+                        )
+
+                        TextField(
+                            value = editedGitHubHandle,
+                            onValueChange = { editedGitHubHandle = it },
+                            placeholder = {
+                                Text(
+                                    text = "Enter Github Handle",
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    fontFamily = FontFamily(Font(R.font.raleway_light)),
+                                    fontWeight = FontWeight(300),
+                                    fontSize = 12.sp
+                                )
+                            },
+                            shape = RoundedCornerShape(12.dp),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                cursorColor = MaterialTheme.colorScheme.tertiary,
+                                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = { editedGitHubHandle = "" }) {
+                                    if (editedGitHubHandle.length in minLength..maxLength) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Check,
+                                            tint = Color(0xFF006400),
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Clear,
+                                            tint = Color.Red,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                        )
+
+
+                        Text(
+                            text = "Slack Username",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 4.dp, top = 12.dp),
+                            textAlign = TextAlign.Start,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                            fontSize = 12.sp
+                        )
+
+                        TextField(
+                            value = editedSlackUsername,
+                            onValueChange = { editedSlackUsername = it },
+                            placeholder = {
+                                Text(
+                                    text = "Enter Github Handle",
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    fontFamily = FontFamily(Font(R.font.raleway_light)),
+                                    fontWeight = FontWeight(300),
+                                    fontSize = 12.sp
+                                )
+                            },
+                            shape = RoundedCornerShape(12.dp),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                cursorColor = MaterialTheme.colorScheme.tertiary,
+                                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = { editedSlackUsername = "" }) {
+                                    if (editedSlackUsername.length in minLength..maxLength) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Check,
+                                            tint = Color(0xFF006400),
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Clear,
+                                            tint = Color.Red,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                        )
+
+                        Text(
+                            text = "Your Bio",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 4.dp, top = 12.dp),
+                            textAlign = TextAlign.Start,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                            fontSize = 12.sp
+                        )
+
+                        TextField(
+                            value = editedBio,
+                            onValueChange = { editedBio = it },
+                            placeholder = {
+                                Text(
+                                    text = "Enter Github Handle",
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    fontFamily = FontFamily(Font(R.font.raleway_light)),
+                                    fontWeight = FontWeight(300),
+                                    fontSize = 12.sp
+                                )
+                            },
+                            shape = RoundedCornerShape(12.dp),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                cursorColor = MaterialTheme.colorScheme.tertiary,
+                                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = { editedBio = "" }) {
+                                    if (editedBio.length in bioMinLength..bioMaxLength) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Check,
+                                            tint = Color(0xFF006400),
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Clear,
+                                            tint = Color.Red,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(80.dp),
+                        )
+                    }
                 }
 
-                item {
-                    UpdateButton(navController, cvViewModel)
+                item{
+                    Button(
+                        onClick = {
+                            // Update the ViewModel with edited values
+                            cvViewModel.firstName = editedFirstName
+                            cvViewModel.lastName = editedLastName
+                            cvViewModel.githubHandle = editedGitHubHandle
+                            cvViewModel.slackUsername = editedSlackUsername
+                            cvViewModel.bio = editedBio
+
+                            // Navigate back to the CVView screen
+                            navController.navigateUp()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .padding(top = 32.dp, bottom = 24.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer),
+                        elevation = ButtonDefaults.buttonElevation(20.dp)
+                    ) {
+                        Text(
+                            text = "Update Cv",
+                            fontFamily = FontFamily(Font(R.font.raleway_medium)),
+                            fontWeight = FontWeight(300),
+                            fontSize = 14.sp
+                        )
+                    }
                 }
 
             }
@@ -167,341 +484,4 @@ fun UpdateText() {
             modifier = Modifier
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TextEditSection(cvViewModel: CvViewModel) {
-
-    var editedFirstName by remember { mutableStateOf(cvViewModel.firstName) }
-    var editedLastName by remember { mutableStateOf(cvViewModel.lastName) }
-    var editedSlackUsername by remember { mutableStateOf(cvViewModel.slackUsername) }
-    var editedGitHubHandle by remember { mutableStateOf(cvViewModel.githubHandle) }
-    var editedBio by remember { mutableStateOf(cvViewModel.bio) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 40.dp)
-    ) {
-
-        val bioMaxLength = 600
-        val bioMinLength = 15
-        val maxLength = 20
-        val minLength = 3
-
-
-        Text(
-            text = "First Name",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp),
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontFamily = FontFamily(Font(R.font.raleway_bold)),
-            fontSize = 12.sp
-        )
-
-        TextField(
-            value = editedFirstName,
-            onValueChange = { editedFirstName = it },
-            placeholder = {
-                Text(
-                    text = "Enter First Name",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(R.font.raleway_light)),
-                    fontWeight = FontWeight(300),
-                    fontSize = 12.sp
-                )
-            },
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                cursorColor = MaterialTheme.colorScheme.tertiary,
-                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            trailingIcon = {
-                IconButton(onClick = { editedFirstName = "" }) {
-                    if (editedFirstName.length in minLength..maxLength) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            tint = Color(0xFF006400),
-                            contentDescription = null
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Outlined.Clear,
-                            tint = Color.Red,
-                            contentDescription = null
-                        )
-                    }
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-        )
-
-
-
-        Text(
-            text = "Last Name",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp, top = 12.dp),
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontFamily = FontFamily(Font(R.font.raleway_bold)),
-            fontSize = 12.sp
-        )
-
-        TextField(
-            value = editedLastName,
-            onValueChange = { editedLastName = it },
-            placeholder = {
-                Text(
-                    text = "Enter Last Name",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(R.font.raleway_light)),
-                    fontWeight = FontWeight(300),
-                    fontSize = 12.sp
-                )
-            },
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                cursorColor = MaterialTheme.colorScheme.tertiary,
-                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            trailingIcon = {
-                IconButton(onClick = { editedLastName = "" }) {
-                    if (editedLastName.length in minLength..maxLength) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            tint = Color(0xFF006400),
-                            contentDescription = null
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Outlined.Clear,
-                            tint = Color.Red,
-                            contentDescription = null
-                        )
-                    }
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-        )
-
-
-        Text(
-            text = "Github Handle",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp, top = 12.dp),
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontFamily = FontFamily(Font(R.font.raleway_bold)),
-            fontSize = 12.sp
-        )
-
-        TextField(
-            value = editedGitHubHandle,
-            onValueChange = { editedGitHubHandle = it },
-            placeholder = {
-                Text(
-                    text = "Enter Github Handle",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(R.font.raleway_light)),
-                    fontWeight = FontWeight(300),
-                    fontSize = 12.sp
-                )
-            },
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                cursorColor = MaterialTheme.colorScheme.tertiary,
-                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            trailingIcon = {
-                IconButton(onClick = { editedGitHubHandle = "" }) {
-                    if (editedGitHubHandle.length in minLength..maxLength) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            tint = Color(0xFF006400),
-                            contentDescription = null
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Outlined.Clear,
-                            tint = Color.Red,
-                            contentDescription = null
-                        )
-                    }
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-        )
-
-
-        Text(
-            text = "Slack Username",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp, top = 12.dp),
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontFamily = FontFamily(Font(R.font.raleway_bold)),
-            fontSize = 12.sp
-        )
-
-        TextField(
-            value = editedSlackUsername,
-            onValueChange = { editedSlackUsername = it },
-            placeholder = {
-                Text(
-                    text = "Enter Github Handle",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(R.font.raleway_light)),
-                    fontWeight = FontWeight(300),
-                    fontSize = 12.sp
-                )
-            },
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                cursorColor = MaterialTheme.colorScheme.tertiary,
-                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            trailingIcon = {
-                IconButton(onClick = { editedSlackUsername = "" }) {
-                    if (editedSlackUsername.length in minLength..maxLength) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            tint = Color(0xFF006400),
-                            contentDescription = null
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Outlined.Clear,
-                            tint = Color.Red,
-                            contentDescription = null
-                        )
-                    }
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-        )
-
-        Text(
-            text = "Your Bio",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp, top = 12.dp),
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontFamily = FontFamily(Font(R.font.raleway_bold)),
-            fontSize = 12.sp
-        )
-
-        TextField(
-            value = editedBio,
-            onValueChange = { editedBio = it },
-            placeholder = {
-                Text(
-                    text = "Enter Github Handle",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontFamily = FontFamily(Font(R.font.raleway_light)),
-                    fontWeight = FontWeight(300),
-                    fontSize = 12.sp
-                )
-            },
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                cursorColor = MaterialTheme.colorScheme.tertiary,
-                disabledLabelColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            trailingIcon = {
-                IconButton(onClick = { editedBio = "" }) {
-                    if (editedBio.length in bioMinLength..bioMaxLength) {
-                        Icon(
-                            imageVector = Icons.Outlined.Check,
-                            tint = Color(0xFF006400),
-                            contentDescription = null
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Outlined.Clear,
-                            tint = Color.Red,
-                            contentDescription = null
-                        )
-                    }
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp),
-        )
-    }
-}
-
-@Composable
-fun UpdateButton(navController: NavController, cvViewModel: CvViewModel) {
-
-    var editedFirstName by remember { mutableStateOf(cvViewModel.firstName) }
-    var editedLastName by remember { mutableStateOf(cvViewModel.lastName) }
-    var editedSlackUsername by remember { mutableStateOf(cvViewModel.slackUsername) }
-    var editedGitHubHandle by remember { mutableStateOf(cvViewModel.githubHandle) }
-    var editedBio by remember { mutableStateOf(cvViewModel.bio) }
-
-    Button(
-        onClick = {
-            // Update the ViewModel with edited values
-            cvViewModel.firstName = editedFirstName
-            cvViewModel.lastName = editedLastName
-            cvViewModel.bio = editedBio
-            cvViewModel.githubHandle = editedGitHubHandle
-            cvViewModel.slackUsername = editedSlackUsername
-
-            // Navigate back to the CVView screen
-            navController.navigateUp()
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .padding(top = 32.dp, bottom = 24.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer),
-        elevation = ButtonDefaults.buttonElevation(20.dp)
-    ) {
-        Text(
-            text = "Update Cv",
-            fontFamily = FontFamily(Font(R.font.raleway_medium)),
-            fontWeight = FontWeight(300),
-            fontSize = 14.sp
-        )
-    }
-
 }
