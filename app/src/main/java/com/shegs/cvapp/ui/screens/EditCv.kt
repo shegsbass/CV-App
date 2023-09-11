@@ -23,7 +23,8 @@ import com.shegs.cvapp.viewmodel.CvViewModel
 @Composable
 fun EditCvScreen(navController: NavController, cvViewModel: CvViewModel) {
 
-    var editedFullName by remember { mutableStateOf(cvViewModel.fullName) }
+    var editedFirstName by remember { mutableStateOf(cvViewModel.firstName) }
+    var editedLastName by remember { mutableStateOf(cvViewModel.lastName) }
     var editedSlackUsername by remember { mutableStateOf(cvViewModel.slackUsername) }
     var editedGitHubHandle by remember { mutableStateOf(cvViewModel.githubHandle) }
     var editedBio by remember { mutableStateOf(cvViewModel.bio) }
@@ -36,8 +37,8 @@ fun EditCvScreen(navController: NavController, cvViewModel: CvViewModel) {
         verticalArrangement = Arrangement.Center
     ) {
         TextField(
-            value = editedFullName,
-            onValueChange = { editedFullName = it },
+            value = editedFirstName,
+            onValueChange = { editedFirstName = it },
             label = { Text("Full Name") }
         )
 
@@ -63,7 +64,8 @@ fun EditCvScreen(navController: NavController, cvViewModel: CvViewModel) {
     Button(
         onClick = {
             // Update the ViewModel with edited values
-            cvViewModel.fullName = editedFullName
+            cvViewModel.firstName = editedFirstName
+            cvViewModel.lastName = editedLastName
             cvViewModel.bio = editedBio
             cvViewModel.githubHandle = editedGitHubHandle
             cvViewModel.slackUsername = editedSlackUsername
