@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 
 class CvViewModel : ViewModel() {
 
-    var fullName by mutableStateOf("Your Full Name")
-    var slackUsername by mutableStateOf("Your Slack Username")
-    var githubHandle by mutableStateOf("Your Github Handle")
-    var bio by mutableStateOf("Your Bio")
+    var fullName by mutableStateOf("Oladokun Oluwasegun")
+    var slackUsername by mutableStateOf("Shegs")
+    var githubHandle by mutableStateOf("Shegsbass")
+    var bio by mutableStateOf("I am a Mobile Developer")
 }
