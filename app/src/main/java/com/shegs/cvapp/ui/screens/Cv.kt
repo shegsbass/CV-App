@@ -161,17 +161,17 @@ fun NameSection(cvViewModel: CvViewModel) {
                     contentDescription = "Circle",
                     tint = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f),
                     modifier = Modifier
-                        .size(170.dp)
+                        .size(160.dp)
                         .scale(scale)
 
                 )
                 Image(
                     painter = painterResource(
-                        id = R.drawable.avatar
+                        id = R.drawable.avt
                     ),
                     contentDescription = "Avatar",
                     modifier = Modifier
-                        .size(170.dp)
+                        .size(160.dp)
                         .graphicsLayer {
                             translationY = translateY // Apply translationY to the icon
                         }
@@ -193,7 +193,7 @@ fun NameSection(cvViewModel: CvViewModel) {
                         fontSize = 32.sp,
                         letterSpacing = 0.sp,
                         textAlign = TextAlign.Left,
-                        fontFamily = FontFamily(Font(R.font.raleway_light)),
+                        fontFamily = FontFamily(Font(R.font.rubik_light)),
                         modifier = Modifier
                     )
                     Text(
@@ -204,7 +204,7 @@ fun NameSection(cvViewModel: CvViewModel) {
                         fontSize = 36.sp,
                         letterSpacing = 0.sp,
                         textAlign = TextAlign.Left,
-                        fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                        fontFamily = FontFamily(Font(R.font.rubik_bold)),
                         modifier = Modifier
                     )
                     Text(
@@ -215,7 +215,7 @@ fun NameSection(cvViewModel: CvViewModel) {
                         fontSize = 36.sp,
                         letterSpacing = 0.sp,
                         textAlign = TextAlign.Left,
-                        fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                        fontFamily = FontFamily(Font(R.font.rubik_bold)),
                         modifier = Modifier
                             .padding(bottom = 3.dp)
                     )
@@ -237,7 +237,7 @@ fun BioSection(cvViewModel: CvViewModel) {
             fontSize = 32.sp,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Left,
-            fontFamily = FontFamily(Font(R.font.raleway_bold)),
+            fontFamily = FontFamily(Font(R.font.rubik_bold)),
             modifier = Modifier
         )
 
@@ -271,7 +271,7 @@ fun BioSection(cvViewModel: CvViewModel) {
             letterSpacing = 0.sp,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Left,
-            fontFamily = FontFamily(Font(R.font.raleway_medium)),
+            fontFamily = FontFamily(Font(R.font.rubik_medium)),
             modifier = Modifier.clickable { expanded = !expanded }
         )
     }
@@ -299,7 +299,7 @@ fun HandleSection(cvViewModel: CvViewModel) {
                 fontSize = 16.sp,
                 letterSpacing = 0.sp,
                 textAlign = TextAlign.Left,
-                fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                fontFamily = FontFamily(Font(R.font.rubik_bold)),
                 modifier = Modifier
             )
         }
@@ -322,7 +322,7 @@ fun HandleSection(cvViewModel: CvViewModel) {
                 fontSize = 16.sp,
                 letterSpacing = 0.sp,
                 textAlign = TextAlign.Left,
-                fontFamily = FontFamily(Font(R.font.raleway_bold)),
+                fontFamily = FontFamily(Font(R.font.rubik_bold)),
                 modifier = Modifier
             )
         }
@@ -338,11 +338,18 @@ fun EditButton(navController: NavController) {
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer),
         modifier = Modifier
-            .width(150.dp)
+            .width(200.dp)
             .height(100.dp)
             .padding(top = 32.dp, bottom = 24.dp, start = 24.dp, end = 24.dp),
         elevation = ButtonDefaults.buttonElevation(20.dp)
     ) {
-        Text("Edit CV")
+        Text(
+            text = "Edit CV",
+            fontSize = 16.sp,
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Center,
+            fontFamily = FontFamily(Font(R.font.rubik_bold))
+
+        )
     }
 }
